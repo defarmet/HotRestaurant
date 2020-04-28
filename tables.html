@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hot Restaurant</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+	<div class="container">
+
+	<div class="jumbotron">
+		<h1 class="text-center">Hot Resturant</h2>
+		<hr>
+		<h3 class="text-center">
+			Current reservations and waitlist
+		</h3>
+		<br>
+		<div class="text-center">
+		<a href="/reserve">
+			<button class="btn btn-lg btn-dark">Reserve</button>
+		</a>
+		<a href="/">
+			<button class="btn btn-lg btn-light">Home</button>
+		</a>
+		</div>
+	</div>
+	<br>
+	<div class="card">
+	<div class="card-header">
+		Current Reservations
+	</div>
+	<div class="card-body" id="reservations"></div>
+	</div>
+	<br>
+	<div class="card">
+	<div class="card-header">
+		Waitlist
+	</div>
+	<div class="card-body" id="waitlist"></div>
+	</div>
+
+	</div>
+
+	<script>
+	function print(value) {
+		var name = $("<p>").text("Name: " + value.name);
+		var phone = $("<p>").text("Phone Number: " + value.phoneNumber);
+		var email = $("<p>").text("Email: " + value.email);
+		return $("<div>").append(name, phone, email);
+	}
+
+	$.get("/api/reservations").then(function(data)
+	{
+		data.forEach(function(value)
+		{
+			$("#reservations").append(print(value), $("<hr>"));
+		});
+	});
+
+
+	$.get("/api/waitlist").then(function(data)
+	{
+		data.forEach(function(value)
+		{
+			$("#waitlist").append(print(value), $("<hr">));
+		});
+	});
+	</script>
+</body>
